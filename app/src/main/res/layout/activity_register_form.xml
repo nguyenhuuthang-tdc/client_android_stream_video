@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0E0E0E"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".RegisterFormActivity">
+
+    <EditText
+        android:id="@+id/edtDeviceName"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:hint="Your Location..."
+        android:textAlignment="center"
+        android:textColorHint="#A3A1A1"
+        android:textColor="#A3A1A1"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#9C27B0"
+        android:text="Submit"
+        android:textSize="17dp"
+        app:cornerRadius="7dp" />
+
+</LinearLayout>
