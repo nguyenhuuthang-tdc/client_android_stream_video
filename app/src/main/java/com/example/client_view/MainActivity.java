@@ -29,10 +29,14 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 public class MainActivity extends AppCompatActivity {
-    private static String server_ip = "192.168.1.7";
+    private static String server_ip = "192.168.1.6";
     private DownloadFileFromURL aST;
     Context context;
     public VideoView videoView;
+    //
+    public String device_name;
+    //
+    public int currentPosition;
     private WebSocket webSocket;
 
     @Override
@@ -47,17 +51,28 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.setLooping(true);
             }
         });
-
-        String deviceName = getDeviceName();
-        if (!deviceName.equals("")) {
-            initialWebSocket(deviceName);
+        device_name = getDeviceName();
+        if (!device_name.equals("")) {
+            initialWebSocket(device_name);
             //
-            String file_url = "http://" + server_ip + "/admin/get_video.php?device_name=" + deviceName;
-            String reload_url = "http://" + server_ip + "/admin/update_reload.php?device_name=" + deviceName;
-            DownloadFileFromURL downloadFileFromURL = new DownloadFileFromURL();
+            String file_url = "http://" + server_ip + "/admin/get_video.php?device_name=" + device_name;
+            String reload_url = "http://" + server_ip + "/admin/update_reload.php?device_name=" + device_name;
             aST = new DownloadFileFromURL();
             aST.execute(file_url, reload_url);
         }
+    }
+    //
+    @Override
+    protected void onPause() {
+        super.onPause();
+        currentPosition = videoView.getCurrentPosition();
+        videoView.pause();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        videoView.seekTo(currentPosition);
+        videoView.start();
     }
     //
     public String getDeviceName() {
@@ -176,9 +191,10 @@ public class MainActivity extends AppCompatActivity {
 
         public void onMessage(WebSocket webSocket, String str) {
             super.onMessage(webSocket, str);
-            webSocket.close(1000, "Disconnect");
-            Intent intent = new Intent(MainActivity.this.getBaseContext(), MainActivity.class);
-            MainActivity.this.startActivity(intent);
+            String file_url = "http://" + server_ip + "/admin/get_video.php?device_name=" + device_name;
+            String reload_url = "http://" + server_ip + "/admin/update_reload.php?device_name=" + device_name;
+            aST = new DownloadFileFromURL();
+            aST.execute(file_url, reload_url);
         }
     }
 }

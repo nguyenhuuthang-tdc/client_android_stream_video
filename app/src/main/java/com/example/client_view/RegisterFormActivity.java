@@ -34,7 +34,7 @@ import okhttp3.WebSocketListener;
 
 public class RegisterFormActivity extends AppCompatActivity {
     //
-    public static String server_ip = "192.168.1.7";
+    public static String server_ip = "192.168.1.6";
     EditText edtDeviceName;
     Button submitBtn;
     @Override
